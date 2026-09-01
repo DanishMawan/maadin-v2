@@ -48,3 +48,7 @@ and no credential is claimed that has not been confirmed.
 `site/` uses only relative paths, so it works at any URL or subpath. Drag the folder
 onto any static host, or point the host's publish directory at `site/` with an empty
 build command.
+
+On Vercel, `vercel.json` at the repo root already sets `outputDirectory` to `site`
+with no build command, so importing this repo deploys as-is — no project settings
+to change.
