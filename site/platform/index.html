@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Thimar Intelligence Platform, architecture | Maadin.AI</title>
+<meta name="description" content="The three-layer intelligence stack: automated ingestion, multi-modal scoring, and continuous monitoring across USGS, BLM, Texas RRC and TWDB.">
+<meta property="og:title" content="Thimar Intelligence Platform, architecture | Maadin.AI">
+<meta property="og:description" content="The three-layer intelligence stack: automated ingestion, multi-modal scoring, and continuous monitoring across USGS, BLM, Texas RRC and TWDB.">
+<meta property="og:type" content="website">
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/satoshi-400.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../assets/fonts/inter-400.woff2" crossorigin>
+<link rel="stylesheet" href="../assets/css/tokens.css?v=42acea24">
+<link rel="stylesheet" href="../assets/css/site.css?v=42acea24">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<!--nav:start-->
+<header>
+<nav class="nav" data-nav aria-label="Primary">
+  <div class="nav__in">
+    <a class="logo" href="../"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 19.5V8.2c0-.7.85-1.05 1.32-.53L12 15l6.68-7.33c.47-.52 1.32-.17 1.32.53V19.5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="5.1" r="1.6" fill="currentColor"/></svg>Maadin<b>.AI</b></a>
+    <ul class="nav__links" data-nav-links>
+        <li><a href="../platform/" aria-current="page">Platform</a></li>
+        <li><a href="../demos/">Demos</a></li>
+        <li><a href="../work/">Work</a></li>
+        <li><a href="../advisory/">Advisory</a></li>
+        <li><a href="../investors/">Investors</a></li>
+        <li><a href="../insights/">Insights</a></li>
+        <li><a href="../about/">About</a></li>
+    </ul>
+    <a class="btn btn--primary nav__cta" href="../contact/">Contact <i aria-hidden="true">&rarr;</i></a>
+    <button class="nav__toggle" data-nav-toggle type="button" aria-expanded="false" aria-label="Menu"><span></span></button>
+  </div>
+</nav>
+</header>
+<!--nav:end-->
+<main id="main">
+<section class="sec band-head">
+  <div class="wrap" data-rv-group>
+    <p class="eyebrow" data-rv><span>Platform architecture</span></p>
+    <h1 class="h2" data-rv style="margin-top:var(--gap-3);max-width:22ch;margin-inline:auto">The natural resource intelligence engine.</h1>
+    <p class="lead" data-rv style="margin-top:var(--gap-3);margin-inline:auto">Thimar reads USGS MRDS, BLM MLRS/LR2000, Texas RRC &amp; GAU, Rule 37/38 filings and satellite imagery, then discovers, scores and monitors natural assets before the market reprices them.</p>
+  </div>
+</section><section class="sec band" id="architecture">
+  <div class="wrap">
+    <div class="shead" data-rv-group>
+      <p class="eyebrow" data-rv><span>System architecture</span></p>
+      <h2 class="h2" data-rv>Three layers, from commodity data to a defensible position.</h2>
+      <p class="lead" data-rv>Anyone can download the registries. The advantage is what happens after.</p>
+    </div>
+    <div style="display:grid;grid-template-columns:56px minmax(0,1fr);gap:var(--gap-4);margin-top:var(--gap-5)">
+      <div data-rv><div class="dia dia--rail" style="min-height:100%" role="img" aria-label="Depth indicator running from commodity data at the top to a defensible position at the bottom."><span class="rail" aria-hidden="true"><span class="rail__line"></span><span class="rail__line rail__line--on" style="bottom:50%"></span><span class="rail__dot rail__dot--done" style="top:10%"></span><span class="rail__dot rail__dot--done" style="top:50%"></span><span class="rail__dot rail__dot--now" style="top:90%"></span></span></div></div>
+      <div class="grid" data-rv-group>
+        <div class="panel" data-rv>
+          <div style="display:flex;justify-content:space-between;gap:var(--gap-3);flex-wrap:wrap">
+            <p class="mono">Layer 01</p><p class="mono">Commodity</p></div>
+          <h3 class="h3" style="margin-top:var(--gap-2)">Automated ingestion &amp; vector geocoding</h3>
+          <p class="body" style="margin-top:var(--gap-2);max-width:70ch">Connects to federal, state and
+            county repositories through automated ETL. Normalises unstructured legal deeds, GIS shapefiles
+            and geochemical assays into a single geospatial vector database.</p>
+        </div>
+        <div class="panel" data-rv>
+          <div style="display:flex;justify-content:space-between;gap:var(--gap-3);flex-wrap:wrap">
+            <p class="mono">Layer 02</p><p class="mono">Proprietary</p></div>
+          <h3 class="h3" style="margin-top:var(--gap-2)">Multi-modal scoring</h3>
+          <p class="body" style="margin-top:var(--gap-2);max-width:70ch">Satellite imagery, production
+            history and title records are evaluated together rather than in isolation, spatial
+            cross-correlation, title curative validation and yield projection in one pass.</p>
+        </div>
+        <div class="panel" data-rv>
+          <div style="display:flex;justify-content:space-between;gap:var(--gap-3);flex-wrap:wrap">
+            <p class="mono">Layer 03</p><p class="mono" style="color:var(--accent-bright)">Defensible</p></div>
+          <h3 class="h3" style="margin-top:var(--gap-2)">Continuous monitoring &amp; alerting</h3>
+          <p class="body" style="margin-top:var(--gap-2);max-width:70ch">New filings, permits and surface
+            activity arrive as alerts against watched parcels, so a position is re-priced when the record
+            changes rather than on a quarterly cycle.</p>
+        </div>
+      </div>
+    </div>
+    <p class="figcap" data-rv style="margin-top:var(--gap-3)">Fig. 1. Three-layer stack; depth marks specialisation.</p>
+  </div>
+</section><section class="sec band band--tint" id="sources" aria-labelledby="sources-h">
+  <div class="wrap">
+    <div class="shead" data-rv-group>
+      <p class="eyebrow" data-rv><span>Data sources</span></p>
+      <h2 class="h2" id="sources-h" data-rv>Public registries, read properly.</h2><p class="lead" data-rv style="margin-top:var(--gap-3)">Five feeds, normalised into one queryable geospatial space.</p>
+    </div>
+    <div data-rv style="margin-top:var(--gap-4)"><div class="tablecard" style="overflow-x:auto">
+      <table class="dtable">
+        <thead><tr><th>Source</th><th>What it yields</th><th class="num">Cadence</th></tr></thead>
+        <tbody>
+          <tr><td>USGS MRDS</td><td>Geochemical surveys &amp; core drill logs</td><td class="num">QUARTERLY</td></tr>
+          <tr><td>BLM MLRS / LR2000</td><td>Federal mineral claim registries</td><td class="num">DAILY</td></tr>
+          <tr><td>Texas RRC &amp; GAU</td><td>Well production, spacing, Rule 37/38</td><td class="num">DAILY</td></tr>
+          <tr><td>TWDB &amp; Texas GCDs</td><td>Groundwater levels &amp; transfer filings</td><td class="num">MONTHLY</td></tr>
+          <tr><td>Satellite imagery</td><td>Surface activity &amp; change detection</td><td class="num">WEEKLY</td></tr>
+        </tbody></table></div></div>
+    <div class="split" style="margin-top:var(--gap-5)">
+      <div data-rv>
+        <div class="codeblock"><pre><span class="k">GET</span> <span class="v">/api/v1/parcels/VN-TR-4417/valuation</span>
+
+{
+  <span class="k">"parcel_id"</span>:             <span class="v">"VN-TR-4417"</span>,
+  <span class="k">"basin"</span>:                 <span class="v">"Vantrel Basin"</span>,
+  <span class="k">"target_commodity"</span>:      <span class="v">"Lithium Brine"</span>,
+  <span class="k">"geochem_score"</span>:         <span class="v">0.96</span>,
+  <span class="k">"assessor_baseline_usd"</span>: <span class="v">2580.00</span>,
+  <span class="k">"maadin_fair_value_usd"</span>: <span class="v">4200.00</span>,
+  <span class="k">"alpha_pct"</span>:             <span class="v">62.8</span>,
+  <span class="k">"title_status"</span>:          <span class="v">"UNENCUMBERED_FEE_SIMPLE"</span>
+}</pre></div>
+        <p class="illus" style="margin-top:var(--gap-3)">Illustrative data. Not a real asset.</p>
+      </div>
+      <div class="head" data-rv>
+        <p class="eyebrow"><span>Developer surface</span></p>
+        <h3 class="h3" style="margin-top:var(--gap-2)">Every valuation is addressable.</h3>
+        <p class="body" style="margin-top:var(--gap-3)">Parcel-level scores, title status and fair-value
+          estimates are exposed as REST and GraphQL endpoints for integration into existing land and ERP
+          systems.</p>
+      </div>
+    </div>
+  </div>
+</section><section class="sec band" id="classes" aria-labelledby="classes-h">
+  <div class="wrap">
+    <div class="shead" data-rv-group>
+      <p class="eyebrow" data-rv><span>Asset classes</span></p>
+      <h2 class="h2" id="classes-h" data-rv>Four classes. One engine.</h2><p class="lead" data-rv style="margin-top:var(--gap-3)">Each class is scored by the same pipeline, with models specialised to its data.</p>
+    </div>
+    <div data-rv style="margin-top:var(--gap-5)"><figure class="figure"><div class="dia"><svg class="fig" viewBox="0 0 1000 420" role="img" aria-label="Five public data sources converge on the Thimar scoring engine and fan out to four asset classes."><g class="draw" style="--dd:240ms"><path d="M250 56 C340 56 350 190 430 206" class="s-d"/><path d="M250 126 C340 126 350 192 430 208" class="s-d"/><path d="M250 196 C340 196 360 204 430 210" class="s-d"/><path d="M250 266 C340 266 350 226 430 212" class="s-d"/><path d="M250 336 C340 336 350 232 430 214" class="s-d"/></g><g class="pop" style="--dd:120ms"><circle cx="240" cy="56" r="4" class="dot"/><circle cx="240" cy="126" r="4" class="dot"/><circle cx="240" cy="196" r="4" class="dot"/><circle cx="240" cy="266" r="4" class="dot"/><circle cx="240" cy="336" r="4" class="dot"/></g><g class="pop" style="--dd:520ms"><rect x="430" y="172" width="150" height="76" rx="12" class="s"/><circle cx="430" cy="210" r="5" class="dot-a"/></g><g class="draw" style="--dd:660ms"><path d="M580 210 C660 210 680 74 760 74" class="s"/><path d="M580 210 C660 210 680 164 760 164" class="s"/><path d="M580 210 C660 210 680 254 760 254" class="s"/><path d="M580 210 C660 210 680 344 760 344" class="s"/></g><g class="pop" style="--dd:840ms"><circle cx="760" cy="74" r="5" class="dot"/><circle cx="760" cy="164" r="5" class="dot"/><circle cx="760" cy="254" r="5" class="dot"/><circle cx="760" cy="344" r="5" class="dot"/></g></svg><div class="dia__l dia__l--m" style="left:0%;top:13.3%"><b>USGS MRDS</b></div><div class="dia__l dia__l--m" style="left:0%;top:30%"><b>BLM LR2000</b></div><div class="dia__l dia__l--m" style="left:0%;top:46.7%"><b>Texas RRC</b></div><div class="dia__l dia__l--m" style="left:0%;top:63.3%"><b>TWDB / GCD</b></div><div class="dia__l dia__l--m" style="left:0%;top:80%"><b>Satellite</b></div><div class="dia__l dia__l--cm" style="left:50.5%;top:50%"><b>Thimar</b><i>Scoring engine</i></div><div class="dia__l dia__l--m" style="left:78%;top:17.6%"><b>Critical minerals</b><i>Lithium &middot; cobalt &middot; REE</i></div><div class="dia__l dia__l--m" style="left:78%;top:39%"><b>Oil &amp; gas royalties</b><i>Permian &middot; Eagle Ford</i></div><div class="dia__l dia__l--m" style="left:78%;top:60.5%"><b>Water rights</b><i>TX groundwater districts</i></div><div class="dia__l dia__l--m" style="left:78%;top:82%"><b>Carbon markets</b><i>Voluntary + compliance</i></div></div><figcaption class="figcap">Fig. 2. Sources to engine to classes.</figcaption></figure></div>
+      <div class="rows" data-rv style="margin-top:var(--gap-5)"><div class="row"><button class="row__btn" data-row-btn type="button"
+        aria-expanded="false" aria-controls="ac0"><span class="h3">Critical minerals</span>
+        <span class="row__sign" aria-hidden="true"></span></button>
+      <div class="row__panel" id="ac0" style="height:0"><div class="row__panel-in body">AI-driven mineral rights acquisition across lithium, cobalt and rare earths, aligned with US Inflation Reduction Act and EU Critical Raw Materials Act tailwinds.</div></div></div><div class="row"><button class="row__btn" data-row-btn type="button"
+        aria-expanded="false" aria-controls="ac1"><span class="h3">Oil &amp; gas royalties</span>
+        <span class="row__sign" aria-hidden="true"></span></button>
+      <div class="row__panel" id="ac1" style="height:0"><div class="row__panel-in body">Permian Basin and Eagle Ford royalty streams identified through well-performance modelling on Texas RRC public data.</div></div></div><div class="row"><button class="row__btn" data-row-btn type="button"
+        aria-expanded="false" aria-controls="ac2"><span class="h3">Water rights</span>
+        <span class="row__sign" aria-hidden="true"></span></button>
+      <div class="row__panel" id="ac2" style="height:0"><div class="row__panel-in body">Texas groundwater district monitoring, permit filings, usage trends and transfer activity across conservation districts.</div></div></div><div class="row"><button class="row__btn" data-row-btn type="button"
+        aria-expanded="false" aria-controls="ac3"><span class="h3">Carbon markets</span>
+        <span class="row__sign" aria-hidden="true"></span></button>
+      <div class="row__panel" id="ac3" style="height:0"><div class="row__panel-in body">Credit origination and portfolio intelligence for voluntary and compliance markets, modelled alongside subsurface rights on the same parcels.</div></div></div></div>
+  </div>
+</section><section class="sec band band--tint" id="flywheel" aria-labelledby="flywheel-h">
+  <div class="wrap">
+    <div class="shead" data-rv-group>
+      <p class="eyebrow" data-rv><span>The model</span></p>
+      <h2 class="h2" id="flywheel-h" data-rv>Royalties fund the next position.</h2><p class="lead" data-rv style="margin-top:var(--gap-3)">Cash generated by acquired rights is reinvested. Platform subscriptions run alongside it.</p>
+    </div>
+    <div class="split" style="margin-top:var(--gap-5);grid-template-columns:minmax(0,1fr) minmax(0,1fr)">
+        <div data-rv><figure class="figure"><div class="dia"><svg class="fig" viewBox="0 0 520 520" role="img" aria-label="A four-stage cycle: discover, acquire, cash flow, reinvest, returning to discover, with one billion dollars by 2030 at the centre."><circle cx="260" cy="260" r="150" class="s-d"/><path d="M260 110 A150 150 0 0 1 410 260" class="s draw" style="--dd:150ms"/><path d="M410 260 A150 150 0 0 1 260 410" class="s draw" style="--dd:330ms"/><path d="M260 410 A150 150 0 0 1 110 260" class="s draw" style="--dd:510ms"/><path d="M110 260 A150 150 0 0 1 260 110" class="s-a draw" style="--dd:690ms"/><g class="pop" style="--dd:400ms"><circle cx="260" cy="110" r="7" class="dot"/></g><g class="pop" style="--dd:500ms"><circle cx="410" cy="260" r="7" class="dot"/></g><g class="pop" style="--dd:600ms"><circle cx="260" cy="410" r="7" class="dot"/></g><g class="pop" style="--dd:700ms"><circle cx="110" cy="260" r="7" class="dot-a"/></g></svg><div class="dia__l dia__l--c" style="left:50%;top:9%"><b>01 Discover</b><i>AI scores assets</i></div><div class="dia__l dia__l--m" style="left:84%;top:50%"><b>02 Acquire</b><i>Rights secured</i></div><div class="dia__l dia__l--c" style="left:50%;top:87%"><b>03 Cash flow</b><i>Royalties + SaaS</i></div><div class="dia__l dia__l--rm" style="left:16%;top:50%"><b>04 Reinvest</b><i>Larger positions</i></div><div class="dia__l dia__l--cm dia__l--num" style="left:50%;top:50%"><b>$1B</b><i>By 2030</i></div></div><figcaption class="figcap">Fig. 3. The compounding cycle.</figcaption></figure></div>
+        <div class="grid" data-rv-group>
+        <div class="panel" data-rv><p class="mono">01 Discover</p>
+          <p class="body" style="margin-top:8px">The engine scores undervalued tracts and rights against the public record.</p></div>
+        <div class="panel" data-rv><p class="mono">02 Acquire</p>
+          <p class="body" style="margin-top:8px">Rights and royalty streams secured at assessed-value baselines.</p></div>
+        <div class="panel" data-rv><p class="mono">03 Cash flow</p>
+          <p class="body" style="margin-top:8px">Royalty distributions and platform subscriptions generate recurring revenue.</p></div>
+        <div class="panel" data-rv><p class="mono">04 Reinvest</p>
+          <p class="body" style="margin-top:8px">Proceeds fund larger positions, the loop that compounds the portfolio.</p></div></div>
+      </div>
+  </div>
+</section><section class="sec band">
+  <div class="wrap">
+    <div class="ctapanel" data-rv>
+      <div>
+        <p class="eyebrow"><span>Next step</span></p>
+        <h2 class="h1" style="margin-top:var(--gap-3);max-width:15ch">See it run, or read the thesis.</h2>
+        <div class="hero-ctas" style="margin-top:var(--gap-4);justify-content:flex-start"><a class="btn btn--primary" href="../demos/">Open the demos <i aria-hidden="true">&rarr;</i></a><a class="btn btn--ghost" href="../investors/">Request the data room <i aria-hidden="true">&rarr;</i></a></div>
+      </div>
+      <div class="ctacard"><div class="ctacard__row"><b>Request the seed data room</b><span>NDA required</span></div><div class="ctacard__row"><b>Open the live demos</b><span>3 prototypes</span></div><div class="ctacard__row"><b>Work with Arshad</b><span>2 slots</span></div></div>
+    </div>
+  </div>
+</section></main>
+<!--footer:start-->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a class="logo" href="../"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 19.5V8.2c0-.7.85-1.05 1.32-.53L12 15l6.68-7.33c.47-.52 1.32-.17 1.32.53V19.5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="5.1" r="1.6" fill="currentColor"/></svg>Maadin<b>.AI</b></a>
+        <p class="body" style="margin-top:var(--gap-2);max-width:30ch">
+          The intelligence layer for the world&rsquo;s most valuable natural assets.</p>
+        <p class="mono" style="margin-top:var(--gap-3)">
+          Maadin.AI<br>United States &middot; Global Advisory</p>
+      </div>
+      <div><h2>Links</h2><ul>
+        <li><a href="../platform/">Platform</a></li>
+        <li><a href="../demos/">Demos</a></li>
+        <li><a href="../work/">Work</a></li>
+        <li><a href="../insights/">Insights</a></li></ul></div>
+      <div><h2>Company</h2><ul>
+        <li><a href="../about/">About</a></li>
+        <li><a href="../advisory/">Advisory</a></li>
+        <li><a href="../investors/">Investors</a></li></ul></div>
+      <div><h2>Contact</h2><ul>
+        <li><a href="../contact/">Send a message</a></li>
+        <li><a href="https://www.linkedin.com/in/arshadkhanxai/" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://spe.org" rel="noopener">SPE</a></li></ul></div>
+    </div>
+    <div class="foot__meta">
+      <span>&copy; 2026 Maadin.AI</span>
+      <span>31&deg;58&prime;N 102&deg;04&prime;W &middot; Permian Basin ref.</span>
+      <span data-clock>--:--:-- UTC</span>
+      <span>Illustrative data throughout. See PLACEHOLDERS.md</span>
+    </div>
+  </div>
+</footer>
+<!--footer:end-->
+<script src="../assets/js/site.js?v=42acea24"></script>
+</body>
+</html>

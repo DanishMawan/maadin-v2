@@ -1,0 +1,93 @@
+/* ==========================================================================
+   Maadin.AI — LIGHT variant tokens.  Values are light-variant-spec §1 verbatim.
+   Reference: coinest-saas.framer.website. Nothing here comes from the dark
+   (Forma) build: no near-black ground, no electric blue, no square corners,
+   no guide grid.
+   ========================================================================== */
+
+@font-face{font-family:'Satoshi';font-style:normal;font-weight:400;font-display:swap;
+  src:url('../fonts/satoshi-400.woff2') format('woff2')}
+@font-face{font-family:'Satoshi';font-style:normal;font-weight:500;font-display:swap;
+  src:url('../fonts/satoshi-500.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:400;font-display:swap;
+  src:url('../fonts/inter-400.woff2') format('woff2')}
+@font-face{font-family:'Inter';font-style:normal;font-weight:500;font-display:swap;
+  src:url('../fonts/inter-500.woff2') format('woff2')}
+@font-face{font-family:'IBM Plex Mono';font-style:normal;font-weight:400;font-display:swap;
+  src:url('../fonts/plexmono-400.woff2') format('woff2')}
+
+:root{
+  /* --- grounds --- */
+  --bg-base:#FFFFFF;
+  --bg-tint:#E9F2E5;
+  --bg-card:#FFFFFF;
+  --bg-card-tint:#E4EFDF;
+  --bg-inverse:#1B3E33;
+
+  /* --- text --- */
+  --text-heading:#143A2E;     /* 12.5:1 on white, 10.9:1 on tint */
+  --text-body:#4A5A55;        /*  7.3:1 on white,  6.3:1 on tint */
+  --text-muted:#5B6B66;       /*  5.6:1 on white — captions only */
+  --text-on-dark:#FFFFFF;     /* 11.8:1 on forest */
+  --text-on-dark-2:#B9CFC6;   /*  7.2:1 on forest */
+  --text-on-lime:#13291F;     /* 10.2:1 on lime */
+
+  /* --- accent.  LIME IS A FILL ONLY: 1.5:1 on white, never a text colour. --- */
+  --lime:#A9E27C;
+  --lime-hover:#97D467;
+  --forest:#1B3E33;
+  --forest-deep:#13291F;
+
+  /* --- lines & shape --- */
+  --border:#E2E8E0;
+  --border-strong:#CBD8C6;
+  /* secondary DIAGRAM stroke. --border-strong is a UI hairline (1.3:1 on tint);
+     a diagram line needs the 3:1 non-text minimum or it reads as broken. */
+  --stroke-2:#7D8D81;
+  --focus-ring:#143A2E;
+
+  --radius-card:18px;
+  --radius-panel:24px;
+  --radius-pill:999px;
+  --shadow-card:0 1px 2px rgba(19,41,31,.04), 0 8px 24px rgba(19,41,31,.06);
+
+  /* --- hero wash (spec §2) --- */
+  --hero-wash:linear-gradient(180deg,#FFFFFF 0%,#F2F8EF 46%,#E4EFDF 100%);
+
+  /* --- type: same scale as the dark build so one scale governs both --- */
+  --ff-display:'Satoshi','Helvetica Neue',Arial,sans-serif;
+  --ff-text:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+  --ff-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+
+  --display:clamp(2.5rem,5.4vw,4.25rem);  --display-lh:1.08; --display-ls:-0.028em;
+  --h1:clamp(2.25rem,4.4vw,3.5rem);       --h1-lh:1.10;      --h1-ls:-0.026em;
+  --h2:clamp(1.75rem,3.2vw,2.75rem);      --h2-lh:1.14;      --h2-ls:-0.022em;
+  --h3:clamp(1.25rem,2vw,1.625rem);       --h3-lh:1.28;      --h3-ls:-0.016em;
+  --h4:1.0625rem;                          --h4-lh:1.40;      --h4-ls:-0.008em;
+  --stat:clamp(1.75rem,3vw,2.5rem);        --stat-lh:1.05;    --stat-ls:-0.02em;
+  --lead:1.0625rem;                        --lead-lh:1.66;
+  --body:0.9375rem;                        --body-lh:1.68;
+  --label:0.75rem;                         --label-lh:1.30;   --label-ls:.08em;
+  --mono:0.8125rem;                        --mono-lh:1.60;
+
+  /* --- layout --- */
+  --band:104px;
+  --band-head:72px;
+  --gutter:64px;
+  --container:1240px;
+  --measure:64ch;
+  --nav-h:68px;
+  --gap-1:8px; --gap-2:16px; --gap-3:24px; --gap-4:40px; --gap-5:64px; --gap-6:96px;
+
+  /* --- motion: carried over unchanged (spec §6) --- */
+  --ease:cubic-bezier(0.44,0,0.56,1);
+  --ease-state:cubic-bezier(0.33,1,0.68,1);
+  --dur-1:400ms; --dur-2:500ms; --dur-3:600ms;
+  --stagger:100ms;
+  --rise:20px;
+}
+
+@media (max-width:1199px){ :root{--gutter:40px;--band:80px;--band-head:56px} }
+@media (max-width:809px){
+  :root{--gutter:20px;--band:64px;--band-head:44px;--nav-h:62px;--body:0.9375rem;--lead:1rem}
+}

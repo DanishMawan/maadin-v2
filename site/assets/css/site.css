@@ -1,0 +1,572 @@
+/* ==========================================================================
+   Maadin.AI — LIGHT variant. Coinest reference: rounded cards, alternating
+   white / pale-green grounds, deep-forest panels, lime as a fill only.
+   ========================================================================== */
+*,*::before,*::after{box-sizing:border-box}*{margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:calc(var(--nav-h) + var(--gap-4))}
+body{font-family:var(--ff-text);font-size:var(--body);line-height:var(--body-lh);font-weight:400;
+  color:var(--text-body);background:var(--bg-base);
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  font-variant-numeric:tabular-nums;overflow-x:hidden}
+img,svg{display:block;max-width:100%}
+button,input,select,textarea{font:inherit;color:inherit}
+h1,h2,h3,h4{font-family:var(--ff-display);font-weight:500;color:var(--text-heading);text-wrap:balance}
+a{color:inherit}
+::selection{background:var(--lime);color:var(--text-on-lime)}
+
+/* focus: required, never removed (spec §6) */
+:focus{outline:none}
+:focus-visible{outline:2px solid var(--focus-ring);outline-offset:3px;border-radius:4px}
+.skip{position:absolute;left:20px;top:-200px;z-index:300;background:var(--forest);
+  color:var(--text-on-dark);padding:12px 20px;border-radius:var(--radius-pill);
+  font-size:var(--body);transition:top var(--dur-1) var(--ease-state)}
+.skip:focus{top:16px}
+
+/* --- Type ---------------------------------------------------------------- */
+.display{font-size:var(--display);line-height:var(--display-lh);letter-spacing:var(--display-ls)}
+.h1{font-size:var(--h1);line-height:var(--h1-lh);letter-spacing:var(--h1-ls)}
+.h2{font-size:var(--h2);line-height:var(--h2-lh);letter-spacing:var(--h2-ls)}
+.h3{font-size:var(--h3);line-height:var(--h3-lh);letter-spacing:var(--h3-ls)}
+.h4{font-family:var(--ff-text);font-size:var(--h4);line-height:var(--h4-lh);
+  letter-spacing:var(--h4-ls);font-weight:600;color:var(--text-heading)}
+.stat{font-family:var(--ff-display);font-size:var(--stat);line-height:var(--stat-lh);
+  letter-spacing:var(--stat-ls);color:var(--text-heading);font-variant-numeric:tabular-nums}
+.lead{font-size:var(--lead);line-height:var(--lead-lh);color:var(--text-body);max-width:60ch}
+.body{font-size:var(--body);line-height:var(--body-lh);color:var(--text-body)}
+.mono{font-family:var(--ff-text);font-size:var(--mono);line-height:var(--mono-lh);
+  letter-spacing:.06em;text-transform:uppercase;color:var(--text-muted);
+  font-variant-numeric:tabular-nums}
+.measure{max-width:var(--measure)}
+.bright{color:var(--text-heading)}
+.alink{color:var(--text-heading);text-decoration:none;border-bottom:1px solid var(--border-strong);
+  font-weight:500}
+.alink:hover{border-bottom-color:var(--text-heading)}
+
+/* --- §3.1 Pill eyebrow ---------------------------------------------------- */
+.eyebrow{display:inline-flex;align-items:center;border-radius:var(--radius-pill);
+  background:var(--bg-card-tint);border:1px solid var(--border-strong);padding:5px 14px;
+  font-size:var(--label);line-height:var(--label-lh);letter-spacing:var(--label-ls);
+  text-transform:uppercase;font-weight:600;color:var(--text-heading)}
+.eyebrow::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--forest);
+  margin-right:8px;flex:0 0 auto}
+.eyebrow span{display:inline-block;font-weight:600;color:var(--text-heading)}
+.band--dark .eyebrow{background:rgba(255,255,255,.10);border-color:rgba(255,255,255,.22);
+  color:var(--text-on-dark)}
+.band--dark .eyebrow::before{background:var(--lime)}
+.band--dark .eyebrow span{color:var(--text-on-dark)}
+
+/* --- §3.2 Centred section header ------------------------------------------ */
+.shead{max-width:56ch;margin-inline:auto;text-align:center}
+.shead>*+*{margin-top:var(--gap-3)}
+.shead .lead{margin-inline:auto}
+
+/* --- Layout --------------------------------------------------------------- */
+.wrap{width:100%;max-width:var(--container);margin-inline:auto;padding-inline:var(--gutter);
+  position:relative;z-index:1}
+.band{padding-block:var(--band)}
+.band--tint{background:var(--bg-tint)}
+.band--dark{background:var(--bg-inverse);color:var(--text-on-dark-2)}
+.band--dark h1,.band--dark h2,.band--dark h3,.band--dark h4{color:var(--text-on-dark)}
+.band--dark .lead,.band--dark .body{color:var(--text-on-dark-2)}
+.band--dark .mono{color:var(--text-on-dark-2)}
+.sec{position:relative}
+.grid{display:grid;gap:var(--gap-3)}
+.g2{grid-template-columns:repeat(auto-fit,minmax(min(280px,100%),1fr))}
+.g3{grid-template-columns:repeat(auto-fit,minmax(min(250px,100%),1fr))}
+.g4{grid-template-columns:repeat(auto-fit,minmax(min(210px,100%),1fr))}
+.split{display:grid;grid-template-columns:minmax(260px,.9fr) minmax(0,1.1fr);
+  gap:var(--gap-5);align-items:center}
+.split>*{min-width:0}
+.head>*+*{margin-top:var(--gap-3)}
+
+/* --- §2 Hero wash --------------------------------------------------------- */
+.band-hero{position:relative;background:var(--hero-wash);
+  padding-block:calc(var(--nav-h) + var(--gap-6)) 0;text-align:center;overflow:visible}
+.band-hero .lead{margin-inline:auto}
+.hero-ctas{display:flex;gap:var(--gap-2);flex-wrap:wrap;justify-content:center}
+/* the hero visual overlaps the boundary into the next section — that overlap is
+   what makes the wash read as blended rather than banded (spec §2) */
+.hero-visual{margin-top:var(--gap-5);margin-bottom:calc(var(--gap-6) * -1);
+  border-radius:var(--radius-panel) var(--radius-panel) 0 0;background:var(--bg-card);
+  border:1px solid var(--border);border-bottom:none;
+  box-shadow:0 -1px 2px rgba(19,41,31,.04), 0 -8px 24px rgba(19,41,31,.06);
+  padding:var(--gap-4) var(--gap-4) 0;text-align:left;position:relative;z-index:2;overflow:hidden}
+.band-hero+.sec{padding-top:calc(var(--band) + var(--gap-6))}
+/* compact page header for sub-pages */
+.band-head{position:relative;background:var(--hero-wash);text-align:center;
+  padding-block:calc(var(--nav-h) + var(--band-head)) var(--band-head)}
+
+/* --- §3.8 Floating pill nav ------------------------------------------------ */
+.nav{position:fixed;left:0;right:0;top:0;z-index:100;padding:14px var(--gutter) 0;
+  pointer-events:none}
+.nav__in{pointer-events:auto;max-width:var(--container);margin-inline:auto;min-height:68px;
+  display:flex;align-items:center;justify-content:space-between;gap:var(--gap-4);
+  background:rgba(255,255,255,.86);backdrop-filter:saturate(140%) blur(14px);
+  -webkit-backdrop-filter:saturate(140%) blur(14px);
+  border:1px solid var(--border);border-radius:var(--radius-pill);padding:10px 12px 10px 24px;
+  box-shadow:var(--shadow-card)}
+.logo{display:inline-flex;align-items:center;gap:9px;min-height:44px;text-decoration:none;
+  font-family:var(--ff-display);font-size:1.0625rem;font-weight:600;letter-spacing:-.02em;
+  color:var(--text-heading)}
+.logo svg{flex:0 0 auto;width:22px;height:22px;overflow:visible}
+.logo b{font-weight:600;color:var(--text-muted)}
+.nav__links{display:flex;align-items:center;gap:var(--gap-4);list-style:none}
+.nav__links a{position:relative;display:inline-flex;align-items:center;min-height:44px;
+  text-decoration:none;font-size:var(--body);color:var(--text-body);
+  transition:color var(--dur-1) var(--ease-state)}
+.nav__links a:hover,.nav__links a[aria-current="page"]{color:var(--text-heading)}
+.nav__links a[aria-current="page"]::after{content:"";position:absolute;left:0;right:0;bottom:11px;
+  height:2px;border-radius:2px;background:var(--lime)}
+.nav__toggle{display:none;width:44px;height:44px;background:none;border:none;cursor:pointer;
+  align-items:center;justify-content:center}
+.nav__toggle span{width:18px;height:2px;border-radius:2px;background:var(--text-heading);
+  position:relative;display:block;transition:background var(--dur-1) var(--ease-state)}
+.nav__toggle span::before,.nav__toggle span::after{content:"";position:absolute;left:0;width:18px;
+  height:2px;border-radius:2px;background:var(--text-heading);
+  transition:transform var(--dur-1) var(--ease-state)}
+.nav__toggle span::before{top:-6px}.nav__toggle span::after{top:6px}
+.nav[data-open="true"] .nav__toggle span{background:transparent}
+.nav[data-open="true"] .nav__toggle span::before{transform:translateY(6px) rotate(45deg)}
+.nav[data-open="true"] .nav__toggle span::after{transform:translateY(-6px) rotate(-45deg)}
+
+/* --- §3.4 Buttons: lime pill, dark green text ------------------------------ */
+.btn{display:inline-flex;align-items:center;gap:9px;min-height:46px;padding:11px 24px;
+  font-size:var(--body);font-weight:600;text-decoration:none;border:1px solid transparent;
+  cursor:pointer;border-radius:var(--radius-pill);
+  transition:background var(--dur-1) var(--ease-state),border-color var(--dur-1) var(--ease-state)}
+.btn--primary{background:var(--lime);color:var(--text-on-lime)}
+.btn--primary:hover{background:var(--lime-hover)}
+.btn--ghost{background:transparent;color:var(--text-heading);border-color:var(--border-strong)}
+.btn--ghost:hover{border-color:var(--text-heading)}
+.band--dark .btn--ghost,.ctapanel .btn--ghost,.panel--dark .btn--ghost{
+  color:var(--text-on-dark);border-color:rgba(255,255,255,.34)}
+.band--dark .btn--ghost:hover,.ctapanel .btn--ghost:hover,.panel--dark .btn--ghost:hover{
+  border-color:var(--text-on-dark);background:rgba(255,255,255,.06)}
+.btn i{font-style:normal;transition:transform var(--dur-1) var(--ease-state)}
+.btn:hover i{transform:translateX(3px)}
+.tlink{display:inline-flex;align-items:center;gap:8px;min-height:44px;font-size:var(--body);
+  font-weight:600;text-decoration:none;color:var(--text-heading);
+  transition:color var(--dur-1) var(--ease-state)}
+.tlink::after{content:"→";transition:transform var(--dur-1) var(--ease-state)}
+.tlink:hover::after{transform:translateX(4px)}
+.band--dark .tlink{color:var(--text-on-dark)}
+
+/* --- §3.3 Rounded cards ---------------------------------------------------- */
+.card,.panel{background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:var(--gap-4)}
+.card{display:flex;flex-direction:column;gap:var(--gap-3);height:100%;text-decoration:none;
+  transition:border-color var(--dur-1) var(--ease-state),box-shadow var(--dur-1) var(--ease-state),
+             transform var(--dur-1) var(--ease-state)}
+a.card:hover{border-color:var(--border-strong);transform:translateY(-2px);
+  box-shadow:0 2px 4px rgba(19,41,31,.05),0 14px 34px rgba(19,41,31,.09)}
+.band--tint .card,.band--tint .panel{background:var(--bg-card)}
+.panel--tint{background:var(--bg-card-tint);border-color:var(--border-strong);box-shadow:none}
+/* §4.4 deep-forest inset panel — stops the middle of the page going flat */
+.panel--dark{background:var(--bg-inverse);border-color:transparent;color:var(--text-on-dark-2);
+  border-radius:var(--radius-panel);padding:var(--gap-5)}
+.panel--dark h2,.panel--dark h3,.panel--dark .h4{color:var(--text-on-dark)}
+.panel--dark .body,.panel--dark .lead{color:var(--text-on-dark-2)}
+.panel--dark .mono{color:var(--text-on-dark-2)}
+.chip{display:inline-flex;align-self:flex-start;align-items:center;gap:6px;
+  background:var(--bg-card-tint);border:1px solid var(--border-strong);
+  border-radius:var(--radius-pill);padding:5px 13px;font-size:var(--mono);
+  color:var(--text-heading);text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+
+/* --- §3.5 Deep-forest icon chip -------------------------------------------- */
+.ichip{display:inline-flex;align-items:center;justify-content:center;width:44px;height:44px;
+  border-radius:14px;background:var(--forest);flex:0 0 auto}
+.ichip svg{width:20px;height:20px}
+.ichip--lime{background:var(--lime)}
+
+/* --- §3.7 Lime stat card ---------------------------------------------------- */
+.statcard{background:var(--lime);border-radius:var(--radius-panel);padding:var(--gap-5);
+  display:grid;grid-template-columns:repeat(4,1fr);gap:var(--gap-4)}
+.statcard .stat,.statcard .mono{color:var(--text-on-lime)}
+.statcard .mono{margin-top:6px;font-weight:600}
+.statcard>div+div{border-left:1px solid rgba(19,41,31,.18);padding-left:var(--gap-4)}
+
+/* --- Data table ------------------------------------------------------------- */
+.dtable{width:100%;border-collapse:collapse;font-family:var(--ff-mono);font-size:var(--mono)}
+.dtable th{text-align:left;padding:12px 14px 12px 0;border-bottom:1px solid var(--border-strong);
+  color:var(--text-muted);text-transform:uppercase;letter-spacing:.07em;font-weight:600}
+.dtable td{padding:14px 14px 14px 0;border-bottom:1px solid var(--border);color:var(--text-heading)}
+.dtable .num{text-align:right;padding-right:0}
+.codeblock{background:var(--bg-card-tint);border:1px solid var(--border-strong);
+  border-radius:var(--radius-card);padding:var(--gap-3);overflow-x:auto}
+.codeblock pre{font-family:var(--ff-mono);font-size:var(--mono);line-height:1.8;
+  color:var(--text-heading);white-space:pre;font-variant-numeric:tabular-nums}
+.codeblock .k{color:var(--text-muted)}
+.codeblock .v{color:var(--text-heading);font-weight:600}
+.illus{display:inline-flex;align-items:center;gap:8px;background:var(--bg-card-tint);
+  border:1px solid var(--border-strong);border-radius:var(--radius-pill);padding:7px 14px;
+  font-size:var(--mono);color:var(--text-heading);text-transform:uppercase;letter-spacing:.07em;
+  font-weight:600}
+.illus::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--forest)}
+.ph{border-bottom:1px dotted var(--text-muted)}
+
+/* --- Rows -------------------------------------------------------------------- */
+.rows{border-top:1px solid var(--border)}
+.row{border-bottom:1px solid var(--border)}
+.row__btn{width:100%;display:flex;align-items:center;justify-content:space-between;
+  gap:var(--gap-3);padding:var(--gap-3) 0;background:none;border:none;cursor:pointer;
+  text-align:left;color:var(--text-heading);transition:color var(--dur-1) var(--ease-state)}
+.row__sign{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--bg-card-tint);
+  position:relative}
+.row__sign::before,.row__sign::after{content:"";position:absolute;background:var(--text-heading);
+  transition:transform var(--dur-1) var(--ease-state),opacity var(--dur-1) var(--ease-state)}
+.row__sign::before{left:8px;top:13.5px;width:12px;height:1.5px}
+.row__sign::after{top:8px;left:13.25px;width:1.5px;height:12px}
+.row__btn[aria-expanded="true"] .row__sign::after{transform:rotate(90deg);opacity:0}
+.row__panel{overflow:hidden;height:0;transition:height var(--dur-1) var(--ease-state)}
+.row__panel-in{padding-bottom:var(--gap-3);max-width:var(--measure)}
+
+/* --- Form --------------------------------------------------------------------- */
+.field{display:flex;flex-direction:column;gap:8px;margin-bottom:var(--gap-3)}
+.field label{font-size:var(--label);letter-spacing:var(--label-ls);text-transform:uppercase;
+  color:var(--text-muted);font-weight:600}
+.field input,.field select,.field textarea{background:var(--bg-base);
+  border:1px solid var(--border-strong);border-radius:12px;padding:12px 14px;
+  color:var(--text-heading);font-size:var(--lead);
+  transition:border-color var(--dur-1) var(--ease-state)}
+.field textarea{min-height:110px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--text-heading)}
+.seg{display:flex;gap:var(--gap-1);flex-wrap:wrap;margin-bottom:var(--gap-4)}
+.seg button{background:var(--bg-base);border:1px solid var(--border-strong);
+  color:var(--text-body);padding:9px 18px;border-radius:var(--radius-pill);cursor:pointer;
+  font-size:var(--body);font-weight:500;transition:all var(--dur-1) var(--ease-state)}
+.seg button[aria-pressed="true"]{background:var(--lime);color:var(--text-on-lime);
+  border-color:var(--lime)}
+
+/* --- §3.6 Full-width deep-forest CTA panel ------------------------------------ */
+.ctapanel{background:var(--bg-inverse);border-radius:var(--radius-panel);padding:var(--gap-6);
+  position:relative;overflow:hidden;display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,.85fr);gap:var(--gap-5);align-items:center}
+.ctapanel h2{color:var(--text-on-dark)}
+.ctapanel .lead{color:var(--text-on-dark-2)}
+.ctacard{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);
+  border-radius:var(--radius-card);padding:var(--gap-4);display:flex;flex-direction:column;
+  gap:var(--gap-2)}
+.ctacard__row{display:flex;align-items:baseline;justify-content:space-between;gap:var(--gap-3);
+  padding-block:10px;border-bottom:1px solid rgba(255,255,255,.12)}
+.ctacard__row:last-of-type{border-bottom:none}
+.ctacard__row b{font-weight:600;color:var(--text-heading);font-size:var(--body)}
+.ctacard__row span{font-size:var(--mono);color:var(--text-body);letter-spacing:.06em;
+  text-transform:uppercase;white-space:nowrap}
+/* only inside the forest panel do these flip to on-dark */
+.ctapanel .ctacard__row,.panel--dark .ctacard__row{border-bottom-color:rgba(255,255,255,.12)}
+.ctapanel .ctacard__row b,.panel--dark .ctacard__row b{color:var(--text-on-dark)}
+.ctapanel .ctacard__row span,.panel--dark .ctacard__row span{color:var(--text-on-dark-2)}
+/* on a light card the divider must be a light hairline */
+.panel .ctacard__row{border-bottom-color:var(--border)}
+
+/* --- Footer — deep forest ------------------------------------------------------ */
+.foot{background:var(--bg-inverse);color:var(--text-on-dark-2);
+  padding-block:var(--band) var(--gap-4)}
+.foot .logo{color:var(--text-on-dark)}
+.foot .body{color:var(--text-on-dark-2)}
+.foot .mono{color:var(--text-on-dark-2)}
+.foot .logo b{color:var(--text-on-dark-2)}
+.foot .logo b{color:var(--text-on-dark-2)}
+.foot__grid{display:grid;grid-template-columns:1.6fr 1fr 1fr 1fr;gap:var(--gap-4)}
+.foot h2{font-family:var(--ff-text);font-size:var(--label);letter-spacing:var(--label-ls);
+  text-transform:uppercase;color:var(--text-on-dark);margin-bottom:var(--gap-2);font-weight:600}
+.foot ul{list-style:none}
+.foot a{display:inline-flex;align-items:center;min-height:44px;text-decoration:none;
+  font-size:var(--body);color:var(--text-on-dark-2);
+  transition:color var(--dur-1) var(--ease-state)}
+.foot a:hover{color:var(--text-on-dark)}
+.foot__meta{margin-top:var(--gap-5);padding-top:var(--gap-3);
+  border-top:1px solid rgba(255,255,255,.14);display:flex;justify-content:space-between;
+  gap:var(--gap-3);flex-wrap:wrap;font-size:var(--mono);color:var(--text-on-dark-2)}
+
+/* --- Reveal (spec §6, unchanged) ------------------------------------------------ */
+[data-rv]{opacity:.001;transform:translateY(var(--rise))}
+[data-rv].in{opacity:1;transform:none;
+  transition:opacity var(--dur-2) var(--ease),transform var(--dur-2) var(--ease);
+  transition-delay:var(--d,0ms)}
+
+/* --- §5 Diagrams: same line-art, new palette ------------------------------------ */
+.dia{position:relative;width:100%}
+.dia>svg{display:block;width:100%;height:auto;overflow:visible}
+.dia__l{position:absolute;pointer-events:none;line-height:1.35;max-width:15rem}
+.dia__l b{display:block;font-weight:600;color:var(--text-heading);font-size:var(--body);
+  letter-spacing:.04em;text-transform:uppercase}
+.dia__l i{display:block;margin-top:5px;font-style:normal;font-size:var(--mono);
+  color:var(--text-muted);letter-spacing:.05em;text-transform:uppercase}
+.dia__l--{transform:none}
+.dia__l--c{transform:translateX(-50%);text-align:center}
+.dia__l--r{transform:translateX(-100%);text-align:right}
+.dia__l--m{transform:translateY(-50%)}
+.dia__l--cm{transform:translate(-50%,-50%);text-align:center}
+.dia__l--rm{transform:translate(-100%,-50%);text-align:right}
+.dia__l--num b{font-family:var(--ff-display);font-size:var(--stat);
+  letter-spacing:var(--stat-ls);text-transform:none}
+.dia--rail{min-height:480px}
+.dia--rail>svg{display:none}          /* replaced by the CSS rail below */
+.dia--rail .dia__l{left:86px!important;max-width:none}
+.rail{position:absolute;left:0;top:0;bottom:0;width:58px;pointer-events:none}
+.rail__line{position:absolute;left:28px;top:var(--rail-a,10%);bottom:var(--rail-b,10%);
+  width:1px;background:var(--stroke-2)}
+.rail__line--on{background:var(--text-heading)}
+.rail__dot{position:absolute;left:29px;width:11px;height:11px;border-radius:50%;
+  transform:translate(-50%,-50%);background:var(--bg-base);
+  border:1.5px solid var(--stroke-2);box-sizing:border-box}
+.rail__dot--done{background:var(--text-heading);border-color:var(--text-heading)}
+.rail__dot--now{background:var(--lime);border-color:var(--lime);
+  box-shadow:0 0 0 5px rgba(169,226,124,.28)}
+.band--tint .rail__dot{background:var(--bg-tint)}
+.panel--dark .dia__l b,.band--dark .dia__l b{color:var(--text-on-dark)}
+.panel--dark .dia__l i,.band--dark .dia__l i{color:var(--text-on-dark-2)}
+@media (max-width:1199px){ .dia__l b{font-size:var(--mono)} .dia__l i{font-size:11px} }
+@media (max-width:809px){ .dia__l{max-width:9rem} .dia__l i{display:none}
+  .dia--rail{min-height:560px} .dia--rail .dia__l{left:74px!important} }
+
+.figure{margin:0}
+.fig{width:100%;height:auto;overflow:visible}
+.fig line,.fig path,.fig circle,.fig rect,.fig polyline{vector-effect:non-scaling-stroke}
+.fig .s{fill:none;stroke:var(--text-heading);stroke-width:1.25;stroke-linecap:round}
+.fig .s-d{fill:none;stroke:var(--stroke-2);stroke-width:1.25}
+.fig .s-a{fill:none;stroke:var(--forest);stroke-width:1.5}
+.fig .dot{fill:var(--forest)}
+.fig .dot-a{fill:var(--lime);stroke:var(--forest);stroke-width:1.25}
+.panel--dark .fig .s,.band--dark .fig .s{stroke:var(--text-on-dark)}
+.panel--dark .fig .s-d,.band--dark .fig .s-d{stroke:rgba(255,255,255,.32)}
+.panel--dark .fig .s-a,.band--dark .fig .s-a{stroke:var(--lime)}
+.panel--dark .fig .dot,.band--dark .fig .dot{fill:var(--text-on-dark)}
+.panel--dark .fig .dot-a,.band--dark .fig .dot-a{fill:var(--lime);stroke:none}
+.figcap{margin-top:var(--gap-2);font-family:var(--ff-text);font-size:var(--mono);
+  color:var(--text-muted);letter-spacing:.04em}
+.panel--dark .figcap,.band--dark .figcap{color:var(--text-on-dark-2);text-align:center}
+.panel--dark .figure,.panel--dark .dia{margin-inline:auto}
+.panel--dark .figure{max-width:min(100%,860px)}
+.fig .draw{stroke-dashoffset:var(--len,0)}
+.in .fig .draw,.fig.in .draw{stroke-dashoffset:0;
+  transition:stroke-dashoffset 900ms var(--ease);transition-delay:var(--dd,100ms)}
+.no-js .fig .draw{stroke-dasharray:none;stroke-dashoffset:0}
+.fig .pop{opacity:.001}
+.in .fig .pop,.fig.in .pop{opacity:1;transition:opacity var(--dur-2) var(--ease);
+  transition-delay:var(--dd,200ms)}
+.fig .grow{transform:scaleX(0);transform-box:fill-box;transform-origin:left center}
+.in .fig .grow,.fig.in .grow{transform:none;transition:transform 800ms var(--ease);
+  transition-delay:var(--dd,150ms)}
+
+/* --- Responsive -------------------------------------------------------------- */
+@media (max-width:1199px){
+  .split{grid-template-columns:1fr;gap:var(--gap-4)}
+  .ctapanel{grid-template-columns:1fr;padding:var(--gap-5)}
+  .foot__grid{grid-template-columns:1fr 1fr}
+  .statcard{grid-template-columns:repeat(2,1fr);row-gap:var(--gap-4)}
+  .statcard>div+div{border-left:none;padding-left:0}
+  .statcard>div:nth-child(even){border-left:1px solid rgba(19,41,31,.18);padding-left:var(--gap-4)}
+}
+@media (max-width:809px){
+  .nav{padding:10px var(--gutter) 0}
+  .nav__in{height:52px;padding-inline:16px}
+  .nav__links{position:fixed;inset:calc(var(--nav-h) + 8px) var(--gutter) auto var(--gutter);
+    background:var(--bg-base);flex-direction:column;align-items:stretch;gap:0;
+    padding:var(--gap-2) var(--gap-3);border:1px solid var(--border);
+    border-radius:var(--radius-card);box-shadow:var(--shadow-card);
+    transform:translateY(-8px);opacity:0;visibility:hidden;
+    transition:opacity var(--dur-1) var(--ease-state),transform var(--dur-1) var(--ease-state),
+               visibility 0s linear var(--dur-1)}
+  .nav[data-open="true"] .nav__links{transform:none;opacity:1;visibility:visible;transition-delay:0s}
+  .nav__links a{padding:var(--gap-2) 0;font-size:1.0625rem;border-bottom:1px solid var(--border)}
+  .nav__links li:last-child a{border-bottom:none}
+  .nav__links a[aria-current="page"]::after{display:none}
+  .nav__cta{display:none}
+  .nav__toggle{display:flex}
+  .g2,.g3,.g4,.foot__grid,.statcard{grid-template-columns:1fr}
+  .statcard>div+div{border-left:none;padding-left:0;padding-top:var(--gap-3);
+    border-top:1px solid rgba(19,41,31,.18)}
+  .statcard>div:nth-child(even){border-left:none;padding-left:0}
+  .hero-visual{margin-bottom:calc(var(--gap-5) * -1)}
+  .dtable{font-size:12px}
+}
+.no-anim [data-rv],.no-anim [data-rv].in{transition:none!important;opacity:1!important;transform:none!important}
+.no-anim .fig .draw{transition:none!important;stroke-dashoffset:0!important}
+.no-anim .fig .pop{transition:none!important;opacity:1!important}
+.no-anim .fig .grow{transition:none!important;transform:none!important}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;
+    scroll-behavior:auto!important}
+  [data-rv]{opacity:1;transform:none}
+  .fig .draw{stroke-dashoffset:0}.fig .pop{opacity:1}.fig .grow{transform:none}
+}
+
+/* --- Stat band — horizontal by default (had no rule; children were stacking) --- */
+.statband{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap-4);
+  align-items:start}
+.statband>*{min-width:0}
+.statband .mono{margin-top:6px}
+@media (max-width:640px){.statband{grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap-3)}}
+
+/* --- Fact cards — replaces the repeated dot-on-a-rail figure (§3.3 card language) --- */
+.gcards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--gap-3)}
+.gcards--3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.gcard{min-width:0;background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-card);box-shadow:var(--shadow-card);padding:var(--gap-4);
+  display:flex;flex-direction:column;gap:12px;
+  transition:transform var(--dur-1) var(--ease-state),box-shadow var(--dur-1) var(--ease-state)}
+.gcard:hover{transform:translateY(-2px);
+  box-shadow:0 1px 2px rgba(19,41,31,.05), 0 14px 32px rgba(19,41,31,.10)}
+.band--tint .gcard{background:var(--bg-card)}
+.gcard__k{font-family:var(--ff-display);font-size:var(--h4);font-weight:600;
+  letter-spacing:-.01em;color:var(--text-heading)}
+.gcard__v{font-size:var(--body);color:var(--text-body)}
+.gcard__n{font-size:var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-muted)}
+/* §3.5 deep-forest rounded-square icon chip */
+.icochip{width:44px;height:44px;border-radius:13px;background:var(--forest);
+  display:inline-flex;align-items:center;justify-content:center;flex:0 0 auto}
+.icochip svg{width:24px;height:24px;overflow:visible;display:block}
+/* the glyphs declare stroke-width only, so the colour has to come from here */
+.icochip svg *{stroke:#FFFFFF;fill:none;vector-effect:non-scaling-stroke}
+.icochip--on{background:var(--lime)}
+.icochip--on svg *{stroke:var(--text-on-lime)}
+@media (max-width:900px){.gcards,.gcards--3{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.gcards,.gcards--3{grid-template-columns:1fr}}
+
+/* --- CTA panel: compact enquiry form (replaces the static link list) --- */
+.ctaform{display:flex;flex-direction:column;gap:12px}
+.ctaform .field{margin:0}
+.ctaform label{display:block;font-size:var(--mono);letter-spacing:.08em;
+  text-transform:uppercase;color:var(--text-on-dark-2);margin-bottom:6px}
+.ctaform input,.ctaform textarea,.ctaform select{width:100%;background:rgba(255,255,255,.07);
+  border:1px solid rgba(255,255,255,.18);border-radius:12px;padding:11px 14px;
+  color:var(--text-on-dark);font:inherit;font-size:var(--body)}
+.ctaform textarea{min-height:82px;resize:vertical}
+.ctaform input::placeholder,.ctaform textarea::placeholder{color:rgba(185,207,198,.7)}
+.ctaform input:focus-visible,.ctaform textarea:focus-visible,.ctaform select:focus-visible{
+  outline:2px solid var(--text-on-dark);outline-offset:2px;border-color:transparent}
+.ctaform .btn{margin-top:4px;align-self:flex-start}
+.ctaform .mono{color:var(--text-on-dark-2)}
+.ctapanel .ph{color:var(--text-on-dark-2);border-bottom-color:rgba(255,255,255,.4)}
+
+/* --- Geological illustration bleeding off the CTA panel edge (§3.6) --- */
+.ctapanel__illus{position:absolute;right:-6%;bottom:-18%;width:46%;max-width:520px;
+  opacity:.16;pointer-events:none;z-index:0}
+.ctapanel__illus svg{width:100%;height:auto;display:block}
+.ctapanel>*{position:relative;z-index:1}
+@media (max-width:900px){.ctapanel__illus{display:none}}
+
+/* --- Boxed data table --------------------------------------------------------- */
+.tablecard{background:var(--bg-card);border:1px solid var(--border);
+  border-radius:var(--radius-card);box-shadow:var(--shadow-card);overflow:hidden}
+.tablecard .dtable{width:100%;border-collapse:collapse}
+.tablecard .dtable th{background:var(--bg-card-tint);color:var(--text-heading);
+  padding:14px 20px;border-bottom:1px solid var(--border-strong);white-space:nowrap}
+.tablecard .dtable td{padding:15px 20px;border-bottom:1px solid var(--border);
+  vertical-align:top}
+.tablecard .dtable tbody tr:last-child td{border-bottom:none}
+.tablecard .dtable tbody tr+tr td{border-top:none}
+.tablecard .dtable .num{text-align:right;padding-right:20px;white-space:nowrap;
+  color:var(--text-body)}
+.tablecard .dtable tbody tr:hover td{background:rgba(228,239,223,.45)}
+
+/* --- Centred single-column form block ----------------------------------------- */
+.formwrap{max-width:640px;margin-inline:auto}
+
+/* --- Section illustration panel ----------------------------------------------- */
+.illus{display:flex;align-items:center;justify-content:center;padding:var(--gap-4);
+  background:var(--bg-card-tint);border-radius:var(--radius-card);min-height:220px}
+.illus svg{width:100%;height:auto;max-width:420px;display:block}
+.panel--dark .illus{background:rgba(255,255,255,.06)}
+
+/* --- Track record — HTML bars (the SVG version came apart at the ends) -------- */
+.trk{display:flex;flex-direction:column;gap:14px}
+.trk__scale{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);
+  gap:var(--gap-3);font-size:var(--mono);letter-spacing:.08em;text-transform:uppercase;
+  color:var(--text-muted);margin-bottom:2px}
+.trk__scale span{grid-column:2;display:flex;justify-content:space-between}
+.trk__scale span::before{content:"2010"}
+.trk__scale span::after{content:"2026"}
+.trk__scale span+span{display:none}
+/* illustration strokes must not inherit the icon-chip fill rules */
+.illus svg .s,.illus svg .s-d,.illus svg .s-a{fill:none}
+.trk__row{display:grid;grid-template-columns:minmax(0,15rem) minmax(0,1fr);gap:var(--gap-3);
+  align-items:center}
+.trk__k{font-size:var(--body);font-weight:600;color:var(--text-heading);min-width:0}
+.trk__track{position:relative;height:10px;border-radius:999px;background:var(--bg-card-tint);
+  min-width:0}
+.trk__bar{position:absolute;top:0;bottom:0;border-radius:999px;background:var(--forest);
+  transform:scaleX(0);transform-origin:left center;
+  transition:transform var(--dur-3) var(--ease) var(--st,0ms)}
+.trk__bar--on{background:var(--lime)}
+.in .trk__bar,.no-anim .trk__bar{transform:scaleX(1)}
+@media (max-width:640px){.trk__row,.trk__scale{grid-template-columns:1fr;gap:6px}
+  .trk__scale span{grid-column:1}}
+
+/* --- Engagement depth — centred columns --------------------------------------- */
+.depth{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--gap-4);
+  align-items:end;position:relative;padding-top:var(--gap-5)}
+.depth__axis{position:absolute;top:0;left:0;right:0;text-align:center;font-size:var(--mono);
+  letter-spacing:.08em;text-transform:uppercase;color:var(--text-muted)}
+.depth__col{min-width:0;display:flex;flex-direction:column;gap:10px;text-align:center;
+  align-items:center}
+.depth__barwrap{height:150px;width:100%;display:flex;align-items:flex-end;justify-content:center}
+.depth__bar{width:min(100%,150px);border-radius:var(--radius-card) var(--radius-card) 0 0;
+  background:var(--bg-card-tint);border:1px solid var(--border-strong);border-bottom:none;
+  transform:scaleY(0);transform-origin:bottom center;
+  transition:transform var(--dur-3) var(--ease) var(--st,0ms)}
+.depth__bar--on{background:var(--lime);border-color:var(--lime)}
+.in .depth__bar,.no-anim .depth__bar{transform:scaleY(1)}
+@media (max-width:640px){.depth{grid-template-columns:1fr;align-items:stretch}
+  .depth__barwrap{height:80px}}
+
+/* --- Contact routes ----------------------------------------------------------- */
+.routes{display:flex;flex-direction:column;gap:var(--gap-3)}
+.route{display:flex;align-items:center;gap:var(--gap-3);background:var(--bg-card);
+  border:1px solid var(--border);border-radius:var(--radius-card);
+  box-shadow:var(--shadow-card);padding:var(--gap-3) var(--gap-4)}
+.route .gcard__k{margin:0}
+.routes__foot{font-size:var(--mono);letter-spacing:.06em;text-transform:uppercase;
+  color:var(--text-muted);text-align:center;margin-top:4px}
+
+/* the count-up sits inside its ring rather than beside it */
+.dia__l--num b{line-height:1}
+.dia--score{position:relative}
+.dia--score .dia__l--num{left:11%!important;top:50%!important;
+  transform:translate(-50%,-50%);text-align:center}
+.dia--score .dia__l--num b{font-size:1.5rem}
+
+/* list inside a fact card (core expertise) */
+.gcard__list{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
+.gcard__list li{font-size:var(--body);color:var(--text-body)}
+/* a short caption label must not wrap onto a second line */
+.dia__l--nw,.dia__l--c.nw,.dia__l--nw b{white-space:nowrap;max-width:none}
+.dia__l--c.nw{transform:translateX(-50%);text-align:center}
+.dia__l--r.nw{transform:translateX(-100%);text-align:right}
+
+/* A trailing section link is a section-level action, so it centres like the header */
+.sec .tlink--end{display:flex;justify-content:center;margin-top:var(--gap-5)}
+.sec .tlink--end .tlink{justify-content:center}
+/* tighter logo lockup */
+.logo{gap:6px}
+.logo b{margin-left:-3px}
+
+/* --- Hero terrain mesh -------------------------------------------------------- */
+/* Decorative wireframe behind the hero. Sits above the wash and below every piece
+   of text and the scored-positions card, so nothing it does can reduce legibility.
+   It reserves its own box, so it cannot shift layout while it loads. */
+.band-hero{isolation:isolate}
+.terrain{position:absolute;left:0;right:0;bottom:0;top:0;overflow:hidden;
+  pointer-events:none;z-index:0;
+  -webkit-mask-image:linear-gradient(180deg,transparent 0%,#000 26%,#000 100%);
+          mask-image:linear-gradient(180deg,transparent 0%,#000 26%,#000 100%)}
+.terrain img{position:absolute;inset:0;width:100%;height:100%;display:block;
+  object-fit:cover;object-position:50% 88%;opacity:.38}
+.band-hero>.wrap{position:relative;z-index:1}
+/* Soft scrim behind the hero copy. The mesh at full strength puts body text at
+   3.2:1 over a grid line, which fails AA — this lifts the ground locally without
+   flattening the mesh anywhere else. Large and feathered, so it reads as haze
+   rather than as a panel. */
+.band-hero>.wrap::before{content:"";position:absolute;z-index:-1;
+  left:50%;top:-6%;transform:translateX(-50%);
+  width:min(1180px,96%);height:78%;pointer-events:none;
+  background:radial-gradient(58% 52% at 50% 42%,
+     rgba(255,255,255,.94) 0%, rgba(255,255,255,.88) 42%,
+     rgba(255,255,255,.55) 68%, rgba(255,255,255,0) 100%)}
+@media (max-width:768px){.terrain{display:none}}   /* becomes noise at this width */
+@media (prefers-reduced-motion:no-preference){
+  .terrain img{will-change:auto}
+}
