@@ -78,7 +78,7 @@ def nav(active, depth):
 <header>
 <nav class="nav" data-nav aria-label="Primary">
   <div class="nav__in">
-    <a class="logo" href="{r}">{logomark()}Maadin<b>.AI</b></a>
+    <a class="logo" href="{r}">{logomark()}Maadin</a>
     <ul class="nav__links" data-nav-links>
 {links}
     </ul>
@@ -99,7 +99,7 @@ def footer(depth):
   <div class="wrap">
     <div class="foot__grid">
       <div>
-        <a class="logo" href="{r}">{logomark()}Maadin<b>.AI</b></a>
+        <a class="logo" href="{r}">{logomark()}Maadin</a>
         <p class="body" style="margin-top:var(--gap-2);max-width:30ch">
           The intelligence layer for the world&rsquo;s most valuable natural assets.</p>
         <p class="mono" style="margin-top:var(--gap-3)">
