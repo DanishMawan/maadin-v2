@@ -1,54 +1,56 @@
-# Maadin.AI — light variant
+# Maadin.AI
 
-Static marketing site for Maadin.AI. Light theme (the Coinest-referenced variant);
-the dark, Forma VC-referenced build lives separately.
+Next.js (App Router) + Tailwind rebuild of the Maadin.AI marketing site.
 
 ## Running it
 
-There is no build step and no dependencies. `site/` is the deployable artefact and
-runs from the filesystem or any static host.
+    npm install
+    npm run dev
 
-    python3 -m http.server 4322 --directory site
+Then open <http://localhost:3000/>.
 
-Then open <http://localhost:4322/>.
-
-## Regenerating
-
-`build.py` is a generator, not a build step: it writes the 16 pages in `site/` from
-one set of templates, so shared components stay in sync. Run it after editing:
-
-    python3 build.py
-
-It rewrites every page, so never hand-edit files under `site/` — the next run will
-overwrite them. Edit `build.py`.
+    npm run build   # production build, all 16 routes are statically generated
+    npm run start   # serve the production build
 
 ## Layout
 
-    build.py                       page templates, figures and content
-    site/                          generated output (deploy this folder)
-      assets/css/tokens.css        design tokens — colours, radii, easing
-      assets/css/site.css          layout and components
-      assets/js/site.js            scroll reveals, count-ups, form behaviour
-      assets/img/                  hero terrain mesh
-    PLACEHOLDERS.md                every unresolved content gap
-    maadin-light-variant-spec.md   the spec this build follows
+    app/                    routes (one folder per page, App Router conventions)
+      globals.css           design tokens (ported from the legacy tokens.css) +
+                             Tailwind theme + component classes (@layer components)
+      fonts.ts               next/font/local setup for Satoshi, Inter, IBM Plex Mono
+    components/             shared UI: nav, footer, section wrappers, cards, forms,
+      diagrams/              the 15 hand-drawn SVG figures + the label-positioning system
+    lib/content/            typed content arrays: articles, demos, nav, track record
 
-## Before launch
+## Design system
 
-`PLACEHOLDERS.md` tracks every piece of unconfirmed or stand-in content and is the
-launch gate — nothing ships while it has open rows. Four items are **blocked** on
-the client rather than on us: **A4**, **B5**, **D3**, **D7**.
+Colors, spacing, the fluid type scale and motion timings live as CSS custom
+properties in `app/globals.css`, ported from the legacy build. Component
+classes (`.card`, `.btn`, `.gcard`, `.ctapanel`, etc.) are reimplemented as
+Tailwind `@layer components` against those tokens, so the visual system runs
+through Tailwind's build while staying pixel-faithful to the original.
 
-All demo data is deliberately fictional (invented parcel IDs, basins and operators)
-and labelled as such in the interface. No real company, parcel or client is named,
-and no credential is claimed that has not been confirmed.
+Scroll reveals, SVG stroke-draw animation, count-up numbers, the mobile nav,
+and the footer clock are ported from the legacy `site.js` into
+`components/client-effects.tsx`, a single client component mounted in the
+root layout — kept close to the original imperative implementation
+(including its `prefers-reduced-motion` and hidden-tab handling) rather than
+rewritten as bespoke per-component React state, since that logic was already
+carefully tuned.
+
+## Legacy static build
+
+`legacy-static-site/` holds the original Python static-site generator
+(`build.py`) and its output (`site/`) that this app replaces. It still runs
+standalone if needed:
+
+    python legacy-static-site/build.py
+    python -m http.server 4322 --directory legacy-static-site/site
+
+`legacy-static-site/PLACEHOLDERS.md` tracks unresolved content gaps and is
+unaffected by the framework migration — it still gates launch.
 
 ## Deploying
 
-`site/` uses only relative paths, so it works at any URL or subpath. Drag the folder
-onto any static host, or point the host's publish directory at `site/` with an empty
-build command.
-
-On Vercel, `vercel.json` at the repo root already sets `outputDirectory` to `site`
-with no build command, so importing this repo deploys as-is — no project settings
-to change.
+Standard Next.js app — importing this repo into Vercel needs no project
+configuration.
