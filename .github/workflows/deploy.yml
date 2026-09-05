@@ -24,14 +24,11 @@ jobs:
       - name: Build static export
         run: npm run build
 
-      - name: Deploy to HostGator via SFTP
-        uses: wlixcc/SFTP-Deploy-Action@v1.2.6
+      - name: Deploy to HostGator via FTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
         with:
           server: ${{ secrets.FTP_SERVER }}
-          port: 22
           username: ${{ secrets.FTP_USERNAME }}
           password: ${{ secrets.FTP_PASSWORD }}
-          local_path: "./out/*"
-          remote_path: ${{ secrets.FTP_SERVER_DIR }}
-          sftp_only: true
-          sftpArgs: "-o ConnectTimeout=5"
+          local-dir: ./out/
+          server-dir: ${{ secrets.FTP_SERVER_DIR }}
