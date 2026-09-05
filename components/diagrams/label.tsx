@@ -17,10 +17,14 @@ type LabelProps = {
   mod?: string;
   below?: number;
   above?: number;
+  /** Extra class appended after the mod class, for a label that needs a
+   * one-off layout tweak (e.g. fitting inside a drawn SVG box) beyond what
+   * the mod variants cover. */
+  className?: string;
 };
 
 /** Ports build.py's L(): one HTML label pinned over a diagram's SVG box. */
-export function Label({ x, y, title, sub, mod = "c", below, above }: LabelProps) {
+export function Label({ x, y, title, sub, mod = "c", below, above, className }: LabelProps) {
   let top: string;
   if (below !== undefined) top = `calc(100% + ${below}px)`;
   else if (above !== undefined) top = `-${above}px`;
@@ -28,7 +32,7 @@ export function Label({ x, y, title, sub, mod = "c", below, above }: LabelProps)
 
   const style: CSSProperties = { left: `${x}%`, top };
   return (
-    <div className={`dia__l dia__l--${mod}`} style={style}>
+    <div className={`dia__l dia__l--${mod}${className ? ` ${className}` : ""}`} style={style}>
       <b>{title}</b>
       {sub ? <i>{sub}</i> : null}
     </div>

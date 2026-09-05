@@ -249,6 +249,34 @@ export default function ClientEffects() {
       });
     });
 
+    // --- Scrollable table hint --------------------------------------------
+    const tableCleanups: Array<() => void> = [];
+    const updateTable = (card: HTMLElement, scroll: HTMLElement) => {
+      const scrollable = scroll.scrollWidth > scroll.clientWidth + 1;
+      card.setAttribute("data-scrollable", String(scrollable));
+      const atEnd = scroll.scrollLeft + scroll.clientWidth >= scroll.scrollWidth - 1;
+      card.setAttribute("data-at-end", String(atEnd));
+    };
+    let tableRO: ResizeObserver | null = null;
+    if ("ResizeObserver" in window) {
+      tableRO = new ResizeObserver((entries) => {
+        entries.forEach((en) => {
+          const scroll = en.target as HTMLElement;
+          const card = scroll.closest<HTMLElement>(".tablecard, .scrollfade");
+          if (card) updateTable(card, scroll);
+        });
+      });
+    }
+    d.querySelectorAll<HTMLElement>(".tablecard, .scrollfade").forEach((card) => {
+      const scroll = card.querySelector<HTMLElement>(".tablecard__scroll");
+      if (!scroll) return;
+      const onScroll = () => updateTable(card, scroll);
+      scroll.addEventListener("scroll", onScroll, { passive: true });
+      tableCleanups.push(() => scroll.removeEventListener("scroll", onScroll));
+      updateTable(card, scroll);
+      tableRO?.observe(scroll);
+    });
+
     // --- Footer live clock ------------------------------------------------
     let clockInterval: ReturnType<typeof setInterval> | undefined;
     const clock = d.querySelector<HTMLElement>("[data-clock]");
@@ -271,6 +299,8 @@ export default function ClientEffects() {
       if (clockInterval) clearInterval(clockInterval);
       rowCleanups.forEach((fn) => fn());
       segCleanups.forEach((fn) => fn());
+      tableCleanups.forEach((fn) => fn());
+      if (tableRO) tableRO.disconnect();
     };
   }, [pathname]);
 

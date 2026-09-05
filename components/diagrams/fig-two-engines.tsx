@@ -16,10 +16,11 @@ const INNER =
 export function FigTwoEngines() {
   return (
     <Dia
+      floor="wide"
       labels={
         <>
-          <Label x={4.5} y={26.3} title="The platform · Venture" sub="Thimar, acquires & compounds assets" mod="m" />
-          <Label x={4.5} y={73.7} title="The practice · Advisory" sub="Fractional CAIO / CRO" mod="m" />
+          <Label x={4.5} y={26.3} title="The platform · Venture" sub="Thimar, acquires & compounds assets" mod="m" className="dia__l--boxfit" />
+          <Label x={4.5} y={73.7} title="The practice · Advisory" sub="Fractional CAIO / CRO" mod="m" className="dia__l--boxfit" />
           <NumLabel x={86.5} y={50} value="$1B" caption="One mission · 2030" />
         </>
       }

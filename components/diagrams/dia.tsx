@@ -7,6 +7,12 @@ type DiaProps = {
   padPx?: number; // px, negative margin-bottom trick from the legacy build
   padTop?: number; // px
   className?: string;
+  /** Some diagrams position a label close enough to the figure's edge that
+   * the standard 420px floor still isn't enough room before it clips or
+   * overlaps — "wide" (FigTwoEngines: a label inside a drawn box) and
+   * "widest" (FigFlywheel: a label anchored near the circle's edge) raise
+   * that floor further. See `.dia-scroll--wide` / `--widest` in globals.css. */
+  floor?: "wide" | "widest";
 };
 
 /**
@@ -20,13 +26,13 @@ type DiaProps = {
  * diagram gets a width floor and scrolls horizontally instead of compressing illegibly —
  * the same fix already applied to wide data tables.
  */
-export function Dia({ children, labels, padBottom, padPx, padTop, className }: DiaProps) {
+export function Dia({ children, labels, padBottom, padPx, padTop, className, floor }: DiaProps) {
   const style: CSSProperties = {};
   if (padBottom) style.paddingBottom = `${padBottom}%`;
   if (padPx) style.marginBottom = `${padPx}px`;
   if (padTop) style.marginTop = `${padTop}px`;
   return (
-    <div className="dia-scroll">
+    <div className={`dia-scroll${floor ? ` dia-scroll--${floor}` : ""}`}>
       <div className={`dia${className ? ` ${className}` : ""}`} style={style}>
         {children}
         {labels}
