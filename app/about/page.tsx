@@ -87,7 +87,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div>
-              <div className="statband" data-rv-group>
+              <div className="statband" data-rv-group style={{ gridTemplateColumns: "repeat(3,1fr)" }}>
                 <div data-rv>
                   <div className="stat">
                     <span className="ph" data-count>

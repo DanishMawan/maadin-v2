@@ -426,12 +426,6 @@
   .split > * {
     min-width: 0;
   }
-  .split--even {
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  }
-  .split--lead {
-    grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  }
   .head > * + * {
     margin-top: var(--gap-3);
   }
@@ -1440,7 +1434,7 @@
 
   /* --- Boxed data table --- */
   .tablecard {
-    @apply relative overflow-hidden;
+    @apply overflow-hidden;
     background: var(--bg-card);
     border: 1px solid var(--border);
     border-radius: var(--radius-card);
@@ -1451,28 +1445,6 @@
      wrapper is what actually scrolls. */
   .tablecard__scroll {
     @apply w-full overflow-x-auto;
-    -webkit-overflow-scrolling: touch;
-  }
-  /* Unstyled equivalent of .tablecard for a table left in its plain (not
-     boxed) style — same scrollable strip, same edge fade, no card chrome. */
-  .scrollfade {
-    @apply relative overflow-hidden;
-  }
-  /* Fade hint on the scroll edge, shown only while ClientEffects has measured
-     real overflow (`data-scrollable`) and the strip isn't already scrolled to
-     its end — tells a mobile user there's more table off-screen without
-     relying on a visible scrollbar. */
-  .tablecard::after,
-  .scrollfade::after {
-    content: "";
-    @apply pointer-events-none absolute inset-y-0 right-0 opacity-0;
-    width: 32px;
-    background: linear-gradient(to right, transparent, var(--bg-card));
-    transition: opacity var(--dur-1) var(--ease-state);
-  }
-  .tablecard[data-scrollable="true"]:not([data-at-end="true"])::after,
-  .scrollfade[data-scrollable="true"]:not([data-at-end="true"])::after {
-    opacity: 1;
   }
   .tablecard .dtable {
     @apply w-full border-collapse;
@@ -1722,9 +1694,7 @@
    Responsive
    ========================================================================== */
 @media (max-width: 1199px) {
-  .split,
-  .split--even,
-  .split--lead {
+  .split {
     grid-template-columns: minmax(0, 1fr);
     gap: var(--gap-4);
   }
@@ -1753,18 +1723,6 @@
   .dia__l i {
     font-size: 11px;
   }
-  /* Fix: a label meant to sit inside a drawn SVG box (e.g. FigTwoEngines)
-     used the same fixed px max-width as every other label. That width is
-     tuned for the box at desktop scale, so as the box shrunk with the
-     viewport the label increasingly overran its right edge — worst right
-     at the two breakpoint edges above, where a discontinuous px jump (240px
-     at 810px wide, 144px at 809px wide) landed the label back on top of a
-     box that had barely changed size. A %-of-diagram width tracks the box
-     at every size instead. Compound selector so it reliably outranks the
-     plain .dia__l max-width rules regardless of source order. */
-  .dia__l.dia__l--boxfit {
-    max-width: 32%;
-  }
 }
 @media (max-width: 809px) {
   .nav {
@@ -1777,10 +1735,6 @@
   .nav__links {
     position: fixed;
     inset: calc(var(--nav-h) + 8px) var(--gutter) auto var(--gutter);
-    max-height: calc(100vh - var(--nav-h) - 8px - var(--gutter));
-    overflow-y: auto;
-    overscroll-behavior: contain;
-    -webkit-overflow-scrolling: touch;
     background: var(--bg-base);
     flex-direction: column;
     align-items: stretch;
@@ -1821,17 +1775,9 @@
   .g2,
   .g3,
   .g4,
+  .foot__grid,
   .statcard {
     grid-template-columns: minmax(0, 1fr);
-  }
-  /* Kept at the 2-column layout it already uses at tablet widths (see the
-     1199px rule above) instead of dropping to 1 column like the other grids
-     — four short link lists in a single column made the footer much longer
-     to scroll through than its content warranted. */
-  .foot__grid {
-    grid-template-columns: 1fr 1fr;
-    column-gap: var(--gap-3);
-    row-gap: var(--gap-5);
   }
   .statcard > div + div {
     border-left: none;
@@ -1845,20 +1791,6 @@
   }
   .hero-visual {
     margin-bottom: calc(var(--gap-5) * -1);
-    padding: var(--gap-3) var(--gap-3) 0;
-  }
-  /* Fix: at mobile widths .band-hero is much taller than it is wide (the
-     card content stacks underneath the copy), so object-fit: cover had to
-     upscale the terrain image well past its native resolution to cover the
-     full section height, reading as blurred, and left almost nothing visible
-     once the card began. Capping the image to a shorter band above the card
-     keeps it sharp and gives it a clear space of its own instead of bleeding
-     unseen behind the card. */
-  .terrain {
-    bottom: auto;
-    height: min(56vh, 480px);
-    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 72%, transparent 100%);
-    mask-image: linear-gradient(180deg, transparent 0%, #000 26%, #000 72%, transparent 100%);
   }
   .dtable {
     font-size: 12px;
@@ -1874,6 +1806,9 @@
   }
   .dia--rail .dia__l {
     left: 74px !important;
+  }
+  .terrain {
+    display: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {
@@ -1948,36 +1883,5 @@
   .ctacard__row span {
     white-space: normal;
     text-align: right;
-  }
-}
-
-/* FigTwoEngines' labels sit inside a drawn box rather than beside the figure
-   like every other diagram, so they need more room before font-size (already
-   reduced) is enough — measured overlap up to ~500px wide. Same floor value
-   as the default above, just triggered earlier for this one diagram instead
-   of lowering it globally for every figure. Compound selector so it reliably
-   outranks the default-floor rule at widths where both would otherwise match
-   (regardless of source order), rather than just matching its specificity. */
-@media (max-width: 500px) {
-  .dia-scroll.dia-scroll--wide {
-    overflow-x: auto;
-  }
-  .dia-scroll.dia-scroll--wide > .dia {
-    min-width: 480px;
-  }
-}
-
-/* FigFlywheel's "04 Reinvest" label is anchored near the circle's left edge
-   and grows leftward from there — even the default 420px/480px floor above
-   left it clipping ~13px into the diagram's own left edge (invisible, since
-   .dia-scroll's overflow-x: auto clips there at rest). Needs both a wider
-   floor and a wider trigger range than the default, measured safe from
-   620px. */
-@media (max-width: 660px) {
-  .dia-scroll.dia-scroll--widest {
-    overflow-x: auto;
-  }
-  .dia-scroll.dia-scroll--widest > .dia {
-    min-width: 620px;
   }
 }

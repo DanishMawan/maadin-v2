@@ -16,7 +16,6 @@ const INNER =
 export function FigFlywheel() {
   return (
     <Dia
-      floor="widest"
       labels={
         <>
           <Label x={50} y={9} title="01 Discover" sub="AI scores assets" mod="c" />

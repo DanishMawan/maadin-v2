@@ -39,31 +39,29 @@ export default function WaterMonitorDemoPage() {
               Four districts, priced per acre-foot.
             </h2>
           </div>
-          <div data-rv className="scrollfade" style={{ marginTop: "var(--gap-4)" }}>
-            <div className="tablecard__scroll">
-              <table className="dtable">
-                <thead>
-                  <tr>
-                    <th>District</th>
-                    <th>Aquifer</th>
-                    <th className="num">Price / AF</th>
-                    <th className="num">Depletion risk</th>
-                    <th className="num">Rating</th>
+          <div data-rv style={{ marginTop: "var(--gap-4)", overflowX: "auto" }}>
+            <table className="dtable">
+              <thead>
+                <tr>
+                  <th>District</th>
+                  <th>Aquifer</th>
+                  <th className="num">Price / AF</th>
+                  <th className="num">Depletion risk</th>
+                  <th className="num">Rating</th>
+                </tr>
+              </thead>
+              <tbody>
+                {WATER_ROWS.map((row) => (
+                  <tr key={row.district}>
+                    <td>{row.district}</td>
+                    <td>{row.aquifer}</td>
+                    <td className="num">{row.price}</td>
+                    <td className="num">{row.risk}</td>
+                    <td className="num bright">{row.rating}</td>
                   </tr>
-                </thead>
-                <tbody>
-                  {WATER_ROWS.map((row) => (
-                    <tr key={row.district}>
-                      <td>{row.district}</td>
-                      <td>{row.aquifer}</td>
-                      <td className="num">{row.price}</td>
-                      <td className="num">{row.risk}</td>
-                      <td className="num bright">{row.rating}</td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                ))}
+              </tbody>
+            </table>
           </div>
           <div data-rv style={{ marginTop: "var(--gap-5)", maxWidth: 640 }}>
             <Figure caption="Fig. 1. Composite $/AF index, five-year trend.">
