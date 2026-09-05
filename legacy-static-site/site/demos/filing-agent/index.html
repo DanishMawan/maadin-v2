@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="en" class="no-js">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI Regulatory Filing Agent, demo | Maadin.AI</title>
+<meta name="description" content="An agentic workflow assembling Texas RRC Form W-1 drilling permits with auditable spacing and density validation. Illustrative data.">
+<meta property="og:title" content="AI Regulatory Filing Agent, demo | Maadin.AI">
+<meta property="og:description" content="An agentic workflow assembling Texas RRC Form W-1 drilling permits with auditable spacing and density validation. Illustrative data.">
+<meta property="og:type" content="website">
+<link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/satoshi-400.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="../../assets/fonts/inter-400.woff2" crossorigin>
+<link rel="stylesheet" href="../../assets/css/tokens.css?v=284f608e">
+<link rel="stylesheet" href="../../assets/css/site.css?v=284f608e">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<!--nav:start-->
+<header>
+<nav class="nav" data-nav aria-label="Primary">
+  <div class="nav__in">
+    <a class="logo" href="../../"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 19.5V8.2c0-.7.85-1.05 1.32-.53L12 15l6.68-7.33c.47-.52 1.32-.17 1.32.53V19.5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="5.1" r="1.6" fill="currentColor"/></svg>Maadin</a>
+    <ul class="nav__links" data-nav-links>
+        <li><a href="../../platform/">Platform</a></li>
+        <li><a href="../../demos/" aria-current="page">Demos</a></li>
+        <li><a href="../../work/">Work</a></li>
+        <li><a href="../../advisory/">Advisory</a></li>
+        <li><a href="../../investors/">Investors</a></li>
+        <li><a href="../../insights/">Insights</a></li>
+        <li><a href="../../about/">About</a></li>
+    </ul>
+    <a class="btn btn--primary nav__cta" href="../../contact/">Contact <i aria-hidden="true">&rarr;</i></a>
+    <button class="nav__toggle" data-nav-toggle type="button" aria-expanded="false" aria-label="Menu"><span></span></button>
+  </div>
+</nav>
+</header>
+<!--nav:end-->
+<main id="main">
+<section class="sec band-head">
+  <div class="wrap" data-rv-group>
+    <p class="eyebrow" data-rv><span>O&amp;G regulatory automation</span></p>
+    <h1 class="h2" data-rv style="margin-top:var(--gap-3);max-width:22ch;margin-inline:auto">AI Regulatory Filing Agent</h1>
+    <p class="lead" data-rv style="margin-top:var(--gap-3);margin-inline:auto">An autonomous compliance workflow that assembles Texas Railroad Commission Form W-1 drilling permits, spacing validation, density checks and packet assembly, with every step auditable.</p>
+  </div>
+</section><section class="sec band" style="padding-block:var(--gap-5)">
+  <div class="wrap"><p class="illus" data-rv>Illustrative data. Not a real asset.</p></div>
+</section>
+<section class="sec band">
+  <div class="wrap">
+    <div class="split">
+      <div class="head" data-rv-group>
+        <p class="eyebrow" data-rv><span>Run log</span></p>
+        <h2 class="h2" data-rv>Six steps, each one checkable.</h2>
+        <p class="lead" data-rv>The agent does not guess spacing rules. It executes geometric checks against
+          shapefiles and depth databases, then assembles the filing packet.</p>
+        <div data-rv style="margin-top:var(--gap-4)"><figure class="figure"><div class="dia"><svg class="fig" viewBox="0 0 320 96" aria-hidden="true"><line x1="16" y1="48" x2="304" y2="48" class="s-d draw" style="--dd:160ms"/><g class="pop" style="--dd:300ms"><rect x="8" y="40" width="16" height="16" rx="4" class="s"/><rect x="78" y="40" width="16" height="16" rx="4" class="s"/><rect x="148" y="40" width="16" height="16" rx="4" class="s"/><rect x="218" y="40" width="16" height="16" rx="4" class="s"/><rect x="288" y="40" width="16" height="16" rx="4" class="s-a"/></g></svg></div><figcaption class="figcap">Fig. 1. Raw information to filed packet.</figcaption></figure></div>
+      </div>
+      <div data-rv>
+        <div class="codeblock"><pre><span class="k">$</span> <span class="v">rrc_agent_runner</span> --operator ORD-4471 --district 08
+
+<span class="k">[0.1s]</span> Initialising RRC agentic pipeline&hellip;
+<span class="k">[0.4s]</span> Querying groundwater depth limits
+        fresh water base at <span class="v">1,650 ft</span>
+<span class="k">[0.8s]</span> Rule 37 spacing vs neighbouring lease lines
+        distance = <span class="v">467 ft</span> (compliant)
+<span class="k">[1.1s]</span> Rule 38 density standard
+        <span class="v">640-acre</span> unit confirmed
+<span class="k">[1.5s]</span> Compiling Form W-1 payload + plat layer
+<span class="k">[1.8s]</span> <span class="v">COMPLETE</span>, packet ready for review</pre></div>
+        <div class="panel" style="margin-top:var(--gap-3)">
+          <p class="eyebrow"><span>Form W-1 &middot; assembled</span></p>
+          <table class="dtable" style="margin-top:var(--gap-3)"><tbody>
+            <tr><td>Operator</td><td class="num bright">Ordway Resources LLC</td></tr>
+            <tr><td>District &amp; county</td><td class="num bright">08 &middot; Menark</td></tr>
+            <tr><td>Lease / well no.</td><td class="num bright">Dorvale Unit #14H</td></tr>
+            <tr><td>Surface casing depth</td><td class="num bright">1,650 ft</td></tr>
+            <tr><td>Rule 37 distance</td><td class="num bright">467 ft</td></tr>
+            <tr><td>Rule 38 acreage unit</td><td class="num bright">640.00 acres</td></tr>
+          </tbody></table>
+          <p class="mono" style="margin-top:var(--gap-3)">Operator and lease names are invented. Rule 37/38 and Form W-1 are genuine public regulatory references.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section><section class="sec band">
+  <div class="wrap">
+    <div class="ctapanel" data-rv>
+      <div>
+        <p class="eyebrow"><span>Next step</span></p>
+        <h2 class="h1" style="margin-top:var(--gap-3);max-width:15ch">See the same engine on minerals.</h2>
+        <div class="hero-ctas" style="margin-top:var(--gap-4);justify-content:flex-start"><a class="btn btn--primary" href="../../demos/mineral-rights/">Mineral demo <i aria-hidden="true">&rarr;</i></a><a class="btn btn--ghost" href="../../demos/water-monitor/">Water demo <i aria-hidden="true">&rarr;</i></a></div>
+      </div>
+      <div class="ctacard"><div class="ctacard__row"><b>Request the seed data room</b><span>NDA required</span></div><div class="ctacard__row"><b>Open the live demos</b><span>3 prototypes</span></div><div class="ctacard__row"><b>Work with Arshad</b><span>2 slots</span></div></div>
+    </div>
+  </div>
+</section></main>
+<!--footer:start-->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot__grid">
+      <div>
+        <a class="logo" href="../../"><svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M4 19.5V8.2c0-.7.85-1.05 1.32-.53L12 15l6.68-7.33c.47-.52 1.32-.17 1.32.53V19.5" fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="5.1" r="1.6" fill="currentColor"/></svg>Maadin</a>
+        <p class="body" style="margin-top:var(--gap-2);max-width:30ch">
+          The intelligence layer for the world&rsquo;s most valuable natural assets.</p>
+        <p class="mono" style="margin-top:var(--gap-3)">
+          Maadin.AI<br>United States &middot; Global Advisory</p>
+      </div>
+      <div><h2>Links</h2><ul>
+        <li><a href="../../platform/">Platform</a></li>
+        <li><a href="../../demos/">Demos</a></li>
+        <li><a href="../../work/">Work</a></li>
+        <li><a href="../../insights/">Insights</a></li></ul></div>
+      <div><h2>Company</h2><ul>
+        <li><a href="../../about/">About</a></li>
+        <li><a href="../../advisory/">Advisory</a></li>
+        <li><a href="../../investors/">Investors</a></li></ul></div>
+      <div><h2>Contact</h2><ul>
+        <li><a href="../../contact/">Send a message</a></li>
+        <li><a href="https://www.linkedin.com/in/arshadkhanxai/" rel="noopener">LinkedIn</a></li>
+        <li><a href="https://spe.org" rel="noopener">SPE</a></li></ul></div>
+    </div>
+    <div class="foot__meta">
+      <span>&copy; 2026 Maadin.AI</span>
+      <span>31&deg;58&prime;N 102&deg;04&prime;W &middot; Permian Basin ref.</span>
+      <span data-clock>--:--:-- UTC</span>
+      <span>Illustrative data throughout. See PLACEHOLDERS.md</span>
+    </div>
+  </div>
+</footer>
+<!--footer:end-->
+<script src="../../assets/js/site.js?v=284f608e"></script>
+</body>
+</html>
