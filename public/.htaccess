@@ -43,14 +43,25 @@ RewriteCond %{DOCUMENT_ROOT}/MAINTENANCE_MODE -f
 # RewriteCond %{REMOTE_ADDR} !=203.0.113.10
 RewriteRule ^ - [E=MAINTENANCE:1,R=500]
 
-# Stop browsers and caches from storing the maintenance response, so the
-# site returns as soon as the flag is removed. After the ErrorDocument
-# internal redirect the variable is renamed REDIRECT_MAINTENANCE.
+# No Cache-Control needed: browsers and caches don't store 500 responses
+# unless told to, so the site returns as soon as the flag is removed.
+
+# Make the 500 response look like Apache's built-in error page rather than
+# a static file: same charset, no file validators or range support.
+<Files "500.html">
+  AddDefaultCharset iso-8859-1
+  FileETag None
+  <IfModule mod_headers.c>
+    Header unset ETag
+    Header always unset ETag
+    Header unset Last-Modified
+    Header always unset Last-Modified
+    Header unset Accept-Ranges
+    Header always unset Accept-Ranges
+  </IfModule>
+</Files>
+
 <IfModule mod_headers.c>
-  Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0" env=MAINTENANCE
-  Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0" env=REDIRECT_MAINTENANCE
-  Header always set Retry-After "3600" env=MAINTENANCE
-  Header always set Retry-After "3600" env=REDIRECT_MAINTENANCE
   Header always unset X-Powered-By
 </IfModule>
 
