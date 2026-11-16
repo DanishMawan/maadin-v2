@@ -1981,3 +1981,109 @@
     min-width: 620px;
   }
 }
+
+/* --- 500 / server error (components/server-error.tsx) --- */
+@layer components {
+  .err {
+    min-height: 100svh;
+    padding-bottom: var(--gap-6);
+  }
+  .err__wrap {
+    position: relative;
+    z-index: 1;
+  }
+  .err__code {
+    font-family: var(--ff-display);
+    font-weight: 500;
+    font-size: clamp(6.5rem, 22vw, 13rem);
+    line-height: 0.9;
+    letter-spacing: -0.06em;
+    color: var(--text-heading);
+    margin-bottom: var(--gap-4);
+    user-select: none;
+  }
+  .err__code span {
+    display: inline-block;
+    color: transparent;
+    -webkit-text-stroke: 2px var(--forest);
+  }
+  .err__code span:last-child {
+    color: var(--lime);
+    -webkit-text-stroke: 0;
+    animation: err-flicker 4.8s steps(1, end) infinite;
+  }
+  .err__h {
+    margin-top: var(--gap-3);
+    max-width: 18ch;
+    margin-inline: auto;
+  }
+  .err__lead {
+    margin-top: var(--gap-3);
+    max-width: 52ch;
+  }
+  .err__ctas {
+    margin-top: var(--gap-4);
+  }
+  .err__readout {
+    margin: var(--gap-5) auto 0;
+    max-width: 760px;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    text-align: left;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    overflow: hidden;
+  }
+  .err__readout > div {
+    padding: var(--gap-3);
+    min-width: 0;
+  }
+  .err__readout > div + div {
+    border-left: 1px solid var(--border);
+  }
+  .err__readout dt {
+    font-family: var(--ff-mono);
+    font-size: var(--label);
+    letter-spacing: var(--label-ls);
+    text-transform: uppercase;
+    color: var(--text-muted);
+  }
+  .err__readout dd {
+    margin-top: 6px;
+    font-family: var(--ff-mono);
+    font-size: var(--mono);
+    line-height: var(--mono-lh);
+    color: var(--text-heading);
+    overflow-wrap: anywhere;
+  }
+  .err__dot {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 8px;
+    border-radius: 50%;
+    background: #d4543f;
+    box-shadow: 0 0 0 4px rgba(212, 84, 63, 0.16);
+    vertical-align: 1px;
+  }
+  @keyframes err-flicker {
+    0%, 86%, 92%, 100% { opacity: 1; }
+    88%, 94% { opacity: 0.25; }
+  }
+}
+@media (max-width: 809px) {
+  .err__readout {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .err__readout > div + div {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .err__code span:last-child {
+    animation: none;
+  }
+}
