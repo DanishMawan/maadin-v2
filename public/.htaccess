@@ -1,0 +1,58 @@
+# ============================================================================
+#  maadinai.com — Apache rules (deployed from public/.htaccess)
+#
+#  NOTE: the deploy overwrites the .htaccess on the server. Anything that
+#  needs to live on the server permanently must be added to THIS file.
+# ============================================================================
+
+Options -Indexes
+RewriteEngine On
+
+# --- Force HTTPS (matches the live site's existing behaviour) ---------------
+RewriteCond %{HTTPS} !=on
+RewriteCond %{HTTP:X-Forwarded-Proto} !=https
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [R=301,L]
+
+# --- Custom error page -------------------------------------------------------
+# Real server errors and maintenance mode both show the plain 500 page.
+ErrorDocument 500 /500.html
+
+# ============================================================================
+#  MAINTENANCE MODE
+#
+#  The switch is a file named MAINTENANCE_MODE in the site root:
+#
+#    MAINTENANCE_MODE = true   ->  the file exists
+#    MAINTENANCE_MODE = false  ->  the file does not exist
+#
+#  Normally controlled from code: set MAINTENANCE_MODE in site.config.mjs and
+#  push to main. The build (scripts/apply-maintenance.mjs) adds or removes the
+#  file and the deploy uploads it. In an emergency you can also create or
+#  delete the file by hand in cPanel; Apache rereads this on every request.
+#
+#  While it is on, every request (pages, assets, _next/* data, images, the
+#  flag file itself) returns HTTP 500 with /500.html as the body. Only
+#  /500.html is let through, so the error page can render.
+# ============================================================================
+
+# The error page itself must stay reachable (it is also served for the
+# internal ErrorDocument subrequest).
+RewriteCond %{REQUEST_URI} !^/500\.html$
+RewriteCond %{DOCUMENT_ROOT}/MAINTENANCE_MODE -f
+# Optional: let your own IP through to check the site. Uncomment and set it.
+# RewriteCond %{REMOTE_ADDR} !=203.0.113.10
+RewriteRule ^ - [E=MAINTENANCE:1,R=500]
+
+# Stop browsers and caches from storing the maintenance response, so the
+# site returns as soon as the flag is removed. After the ErrorDocument
+# internal redirect the variable is renamed REDIRECT_MAINTENANCE.
+<IfModule mod_headers.c>
+  Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0" env=MAINTENANCE
+  Header always set Cache-Control "no-store, no-cache, must-revalidate, max-age=0" env=REDIRECT_MAINTENANCE
+  Header always set Retry-After "3600" env=MAINTENANCE
+  Header always set Retry-After "3600" env=REDIRECT_MAINTENANCE
+  Header always unset X-Powered-By
+</IfModule>
+
+# Never show the server version in error pages or headers.
+ServerSignature Off
